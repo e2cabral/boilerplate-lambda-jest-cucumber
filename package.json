@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "unit:test": "jest --config=jest.config.ts",
-    "bdd:test": "cucumber-js --config cucumber.config.json"
+    "bdd:test": "cucumber-js --publish-quiet --config cucumber.config.json"
   },
   "author": "Edson Cabral Junior",
   "license": "ISC",
