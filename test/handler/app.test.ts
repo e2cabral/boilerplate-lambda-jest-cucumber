@@ -36,5 +36,13 @@ describe('Get information from the handler', () => {
 
         expect(httpResponse.statusCode).toBe(500)
         expect(httpResponse).toEqual(serverError(new Error('You must provide at least a make.')));
-    })
+    });
+
+    test('Should return a list of cars from audi make', async () => {
+        const httpResponse = await handle(
+            mockRequest(null, 'audi')
+        );
+
+        expect(httpResponse).toEqual(ok([{ model: 'a4', make: 'audi' }]));
+    });
 })
