@@ -1,0 +1,7 @@
+# FOLDERS
+node_modules
+coverage
+.idea
+
+# FILES
+cucumber-report.html
