@@ -6,7 +6,7 @@ import {
     APIGatewayProxyEvent,
     APIGatewayProxyResult
 } from "aws-lambda";
-import {serverError} from "../../src/helpers/http.helper";
+import {ok, serverError} from "../../src/helpers/http.helper";
 
 const mockRequest = (model: string | null, make: string | null) => ({
     body: null,
@@ -24,7 +24,7 @@ const mockRequest = (model: string | null, make: string | null) => ({
 } as APIGatewayProxyEvent);
 
 let actual: APIGatewayProxyResult;
-let model: string;
+let model: string | null;
 let make: string;
 
 //# region First Step
@@ -59,4 +59,22 @@ Then(/^Should return a http server error message$/, () => {
     assert.equal(actual.statusCode, expected.statusCode);
     assert.equal(JSON.parse(actualToCompare).name, expected.body.name);
 })
+//# endregion
+
+//# region Third Step
+Given(/^A car make$/, () => {
+    make = 'audi';
+    model = null;
+});
+
+When(/^The make is audi$/, async () => {
+    actual = await handle(mockRequest(model, make));
+});
+
+Then(/^Return a list of cars from the audi make$/, () => {
+    const expected = ok([{ model: 'a4', make: 'audi' }]);
+    const actualToCompare = JSON.stringify(actual.body);
+
+    assert.equal(typeof JSON.parse(actualToCompare), typeof expected.body);
+});
 //# endregion
