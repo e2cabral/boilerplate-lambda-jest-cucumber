@@ -71,7 +71,7 @@ When(/^The make is audi$/, async () => {
 });
 
 Then(/^Return a list of cars from the audi make$/, () => {
-    const actualToCompare = JSON.stringify(actual.body);
+    const actualToCompare = JSON.parse(JSON.stringify(actual.body));
 
     assert.equal(Array.isArray(actualToCompare), true);
 });
