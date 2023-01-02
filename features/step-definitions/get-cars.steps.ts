@@ -6,7 +6,7 @@ import {
     APIGatewayProxyEvent,
     APIGatewayProxyResult
 } from "aws-lambda";
-import {ok, serverError} from "../../src/helpers/http.helper";
+import {serverError} from "../../src/helpers/http.helper";
 
 const mockRequest = (model: string | null, make: string | null) => ({
     body: null,
@@ -38,10 +38,9 @@ When(/^The model is a4 and the make is audi$/, async () => {
 });
 
 Then(/^The data returned should be a list of audi a4$/, async () => {
-    const listToCompareTypes: any[] = [];
     assert.equal(
-        typeof listToCompareTypes,
-        typeof actual.body,
+        Array.isArray(actual.body),
+        true,
         'The expected parameter is not equal to the default'
     );
 });
@@ -72,9 +71,8 @@ When(/^The make is audi$/, async () => {
 });
 
 Then(/^Return a list of cars from the audi make$/, () => {
-    const expected = ok([{ model: 'a4', make: 'audi' }]);
     const actualToCompare = JSON.stringify(actual.body);
 
-    assert.equal(typeof JSON.parse(actualToCompare), typeof expected.body);
+    assert.equal(Array.isArray(actualToCompare), true);
 });
 //# endregion
